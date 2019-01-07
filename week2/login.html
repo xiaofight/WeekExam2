@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<center>
+		<form action="login.php" method="post">
+			<table border="1px">
+				<tr>
+					<td>用户名</td>
+					<td><input type="text" name="name" id="name" onblur="checkName()"><span id="Sname">*</span></td>
+				</tr>
+				<tr>
+					<td>密码</td>
+					<td><input type="password" name="pwd"><span id="Spwd">*</span></td>
+				</tr>
+				<tr>
+					<td colspan="2" style="text-align: center;"><button type="submit">登录</button></td>
+				</tr>
+			</table>
+		</form>
+	</center>
+</body>
+</html>
+<script>
+	function checkName(){
+		var name = document.getElementById('name').value;
+		var x = new XMLHttpRequest();
+		x.open('GET','index.php?name='+name,true);
+		x.send();
+		x.onreadystatechange = function(){
+			if(x.readyState == 4 && x.status ==200){
+				if(x.responseText == 0){
+					document.getElementById('Sname').innerHTML = "<font color='red'>用户名不存在</font>";
+					return false;
+				}else{
+					return true;
+				}
+			}
+		}
+	}
+</script>

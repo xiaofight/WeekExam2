@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>会员注册</title>
+</head>
+<body>
+	<center>
+		<form action="insert.php" method="post" onsubmit="return check()">
+			<table border="1px">
+				<tr>
+					<td>用户名</td>
+					<td><input type="text" name="name" id="name" onblur="checkName()"><span id="Sname">*</span></td>
+				</tr>
+				<tr>
+					<td>密码</td>
+					<td><input type="password" name="pwd"><span id="Spwd">*</span></td>
+				</tr>
+				<tr>
+					<td>确认密码</td>
+					<td><input type="password" id="repwd"><span id="Srepwd">*</span></td>
+				</tr>
+				<tr>
+					<td>E-mail</td>
+					<td><input type="text" name="email" id="email" onblur="checkEmail()"><span id="Semail">邮箱和手机至少填一项</span></td>
+				</tr>
+				<tr>
+					<td>手机</td>
+					<td><input type="text" name="phone" id="phone" onblur="checkPhone()"><span id="Sphone">邮箱和手机至少填一项</span></td>
+				</tr>
+				<tr>
+					<td colspan="2" style="text-align: center;"><button type="submit">完成</button></td>
+				</tr>
+			</table>
+		</form>
+	</center>
+</body>
+</html>
+<script>
+	// 验证用户名
+	function checkName(){
+		var name = document.getElementById('name').value;
+		var x = new XMLHttpRequest();
+		x.open('GET','index.php?name='+name,true);
+		x.send();
+		x.onreadystatechange = function(){
+			if(x.readyState == 4 && x.status ==200){
+				if(x.responseText == 1){
+					document.getElementById('Sname').innerHTML = "<font color='red'>用户名已存在</font>";
+					return false;
+				}else{
+					return true;
+				}
+			}
+		}
+	}
+	// 验证邮箱
+	function checkEmail(){
+		var email = document.getElementById('email').value;
+		if(email.length == 0){
+			return false;
+		}else{
+			return true;
+		}
+	}
+	// 验证手机号
+	function checkPhone(){
+		var phone = document.getElementById('phone').value;
+		if(phone.length == 0){
+			return false;
+		}else{
+			return true;
+		}
+	}
+	// 验证表单
+	function check(){
+		if(checkName&&checkEmail()||checkPhone()){
+			return true;
+		}else{
+			return false;
+		}
+	}
+</script>
